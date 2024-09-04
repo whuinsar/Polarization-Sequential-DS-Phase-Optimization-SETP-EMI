@@ -4,8 +4,11 @@ mkdir('com_slc'); % File path to store the compressed SLCs
 
 CalWin=[2*hW_l+1 2*hW_w+1];
 
-% start parallel ------------
+% start parallel if it not running------------
 mypool=parpool(cores);
+if isempty(gcp('nocreate'))
+    mypool=parpool(cores); 
+end
 % ----------------------------------------------
 %% check the total number of images
 imgpath=[workpath '/' char(channels(1)) '/rmli/'];
@@ -32,7 +35,12 @@ overlap_rg=2*hW_w+1;
     Createpatch(r0, c0, rN, cN,paz,  prg,  overlap_az, overlap_rg);
 save('patch.mat','nlines','hW_l','hW_w','rN','cN', 'overlap_az','overlap_rg','paz','prg',...
     'patchlist','patch_noover_local','patch_over_local','patch_noover','patch_over','patchsize'); 
-
+%%
+%---check mask ------------------
+if mask_flag==1
+   load('mask.mat');
+end
+% -------------------------------
 %%
 
 

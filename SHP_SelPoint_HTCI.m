@@ -1,4 +1,4 @@
-function [SHP]=SHP_SelPoint_HTCI(mlistack,CalWin,Alpha,EstAgr)
+function [SHP]=SHP_SelPoint_HTCI(mlistack,CalWin,Alpha,EstAgr,prefilter)
 %This function is used to select homogeneous pixels (SHP) on SAR intensity stack with single look 
 %   Usage:
 %       [SHP]=SHP_SelPoint(mlistack,CalWin,Alpha,EstAgr)
@@ -12,6 +12,11 @@ function [SHP]=SHP_SelPoint_HTCI(mlistack,CalWin,Alpha,EstAgr)
 %   - SHP.PixelInd: A CalWin(1)*CalWin(2) by size(mlistack,1)*size(mlistack,2) array with elements of type logical, containing a SHPs set per pixel 
 %   - SHP.BroNum:   The SHP number per pixel (reference pixel is not included) 
 %   - SHP.CalWin:   Fixed boxcar window size
+if nargin < 5
+    prefilter = 0;
+end
+guass_win=2;
+guass_sigma=1;
 
 if nargin < 4
     EstAgr='HTCI';
@@ -38,6 +43,12 @@ end
 
 [nlines,nwidths,npages] = size(mlistack);
 mlistack=single(mlistack);
+
+% guass prefilter for slc
+if prefilter == 1
+    mlistack=guass_prefilter(mlistack,guass_win,guass_sigma);
+end
+%
 
 %Parameter prepare:
 RadiusRow=(CalWin(1)-1)/2;
@@ -125,7 +136,7 @@ SHP.BroNum = sum(SHP.PixelSub~=0,1);
 SHP.BroNum = reshape(SHP.BroNum(:),[nlines,nwidths]);
 SHP.BroNum = single((SHP.BroNum-1));          
 SHP.CalWin = CalWin;            
-%t=toc;
+%toc;
 % figure;imagesc(SHP.BroNum);axis image off
 % ti=title ('Homogeneous Pixel Number');
 % set(ti,'fontweight','bold');
