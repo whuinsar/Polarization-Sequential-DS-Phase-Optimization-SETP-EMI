@@ -34,7 +34,7 @@ if (sum(ismember(channels, 'vv')))
     %-------------------------------------
     % Read diff vv data stepwise -------------------
     temp=ImgRead_stepwise([workpath '/vv/diff'] ,'.diff',nlines,processed_num,interval,'cpxfloat32','b',Blk);
-    cint_minrefdemvv=temp.datastack;
+    cint_minrefdemvv=temp.datastack;cint_minrefdemvv=cint_minrefdemvv./abs(cint_minrefdemvv);
     % Read slc vv data stepwise --------------------
     temp=ImgRead_stepwise([workpath '/vv/slc'] ,'.rslc_f',nlines,processed_num,interval,'cpxfloat32','b',Blk);
     sarcpxvv=temp.datastack;
@@ -61,7 +61,7 @@ if (sum(ismember(channels, 'vh')))
     mlivh=temp.datastack;
     % Read diff vh data stepwise ----------------------------------
     temp=ImgRead_stepwise([workpath '/vh/diff'] ,'.diff',nlines,processed_num,interval,'cpxfloat32','b',Blk);
-    cint_minrefdemvh=temp.datastack;
+    cint_minrefdemvh=temp.datastack;cint_minrefdemvh=cint_minrefdemvh./abs(cint_minrefdemvh);
     % Read slc vh data stepwise ------------------------------------
     temp=ImgRead_stepwise([workpath '/vh/slc'] ,'.rslc_f',nlines,processed_num,interval,'cpxfloat32','b',Blk);
     sarcpxvh=temp.datastack;
@@ -90,7 +90,7 @@ if (sum(ismember(channels, 'hh')))
     mlihh=temp.datastack;
     % Read diff hh data stepwise -------------------
     temp=ImgRead_stepwise([workpath '/hh/diff'] ,'.diff',nlines,processed_num,interval,'cpxfloat32','b',Blk);
-    cint_minrefdemhh=temp.datastack;
+    cint_minrefdemhh=temp.datastack;cint_minrefdemhh=cint_minrefdemhh./abs(cint_minrefdemhh);
     % Read slc hh data stepwise --------------------
     temp=ImgRead_stepwise([workpath '/hh/slc'] ,'.rslc_f',nlines,processed_num,interval,'cpxfloat32','b',Blk);
     sarcpxhh=temp.datastack;
