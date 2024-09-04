@@ -37,9 +37,9 @@ save('patch.mat','nlines','hW_l','hW_w','rN','cN', 'overlap_az','overlap_rg','pa
     'patchlist','patch_noover_local','patch_over_local','patch_noover','patch_over','patchsize'); 
 %%
 %---check mask ------------------
-if mask_flag==1
-   load('mask.mat');
-end
+% if mask_flag==1
+%    load('mask.mat');
+% end
 % -------------------------------
 %%
 
